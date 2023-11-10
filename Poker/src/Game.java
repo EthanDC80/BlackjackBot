@@ -1,10 +1,3 @@
-/***********************
- *  Assignment 4
- *  Andreas Hadjigeorgiou
- *  ahh2131
- *  Game class
- */
-
 import java.util.Arrays;
 import java.util.Scanner;
 

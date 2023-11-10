@@ -1,10 +1,3 @@
-/***********************
- *  Assignment 4
- *  Andreas Hadjigeorgiou
- *  ahh2131
- *  Deck class
- */
-
 import java.util.Random;
 
 public class Deck 

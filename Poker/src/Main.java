@@ -1,7 +1,5 @@
-public class GameTest 
-{
-
-  public static void main(String[] args) 
+public class Main {
+    public static void main(String[] args) 
 	{
 		
 		// make game
@@ -11,6 +9,5 @@ public class GameTest
 		game.play();
 
 	}
-
+    
 }
-

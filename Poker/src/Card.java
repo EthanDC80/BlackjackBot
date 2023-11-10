@@ -1,10 +1,3 @@
-/***********************
- *  Assignment 4
- *  Andreas Hadjigeorgiou
- *  ahh2131
- *  Card class
- */
-
 public class Card implements Comparable<Card>
 {
   // I.V.s are suit and rank
