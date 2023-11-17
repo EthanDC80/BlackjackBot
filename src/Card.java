@@ -3,7 +3,7 @@ import java.util.Random;
 
 class Card {
     int value;
-
+    
     public Card(int value) {
         this.value = value;
     }
@@ -14,13 +14,20 @@ class Deck {
 
     public Deck() {
         cards = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 2; i <= 14; i++) {
             for (int j = 0; j < 4; j++) {
-                cards.add(new Card(i));
+               
+            if(i == 11 || i == 12 || i == 13) {
+            	cards.add(new Card(10));
             }
+            if(i == 14) {
+            	cards.add(new Card(11));
+            	
+            }
+            	cards.add(new Card(i));
         }
     }
-
+    }
     public Card drawCard() {
         if (!cards.isEmpty()) {
             shuffle();

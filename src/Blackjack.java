@@ -3,9 +3,9 @@ public class Blackjack {
         int numSimulations = 10000;
         int playerWins = 0;
         int dealerWins = 0;
-        int draws = 0;
+      //  int draws = 0;
 
-        for (int i = 0; i < numSimulations; i++) {
+      /*  for (int i = 0; i < numSimulations; i++) {
             boolean playerWin = simulateGame();
             if (playerWin) {
                 playerWins++;
@@ -13,10 +13,13 @@ public class Blackjack {
                 dealerWins++;
             }
         }
-
+	*/
+        
+        
+        
         System.out.println("Player Wins: " + playerWins);
         System.out.println("Dealer Wins: " + dealerWins);
-        System.out.println("Draws: " + draws);
+       // System.out.println("Draws: " + draws);
         System.out.println("Total Win Percentage: " + Double.valueOf(playerWins)/Double.valueOf(dealerWins+playerWins)*100);
     }
 
