@@ -59,10 +59,45 @@ class Player {
     }
     
     public boolean chooseMove() {
-    	
-    	
-    	//hit
-    	return true;
+        int handValue = getHandValue();
+        int dealerCardIndex = dealerCardIndex();
+
+        // Ensure the hand value and dealer card index are within bounds
+        if (handValue >= 3 && handValue <= 20 && dealerCardIndex >= 0 && dealerCardIndex <= 21) {
+            double hitPercentage = pctChart[handValue -1][dealerCardIndex];
+
+            // Check if the random number is less than the hitPercentage
+            return Math.random() < hitPercentage;
+        } else {
+            // Handle out-of-bounds conditions (you may choose to always hit or always stand)
+        	 return handValue < 17; // For example, always hit if out of bounds
+        }
+    }
+    
+    static void adjustPercentages(Player player, boolean playerWins) {
+        for (int i = 0; i < player.pctChart.length; i++) {
+            for (int j = 0; j < player.pctChart[i].length; j++) {
+                double adjustment = 0.05; // Fixed adjustment for demonstration purposes
+
+                // Adjust percentages based on game outcome
+                if (playerWins) {
+                    player.pctChart[i][j] += adjustment;
+                    player.pctChart[i][j] = Math.min(1.0, player.pctChart[i][j]); // Ensure it doesn't exceed 1.0
+                } else {
+                    player.pctChart[i][j] -= adjustment;
+                    player.pctChart[i][j] = Math.max(0.0, player.pctChart[i][j]); // Ensure it doesn't go below 0.0
+                }
+            }
+        }
+    }
+    
+    private int dealerCardIndex() {
+        int dealerCard = getHand().get(0).value;
+       /* if (dealerCard == 11) {
+            dealerCard = 14; // Convert Ace to 14
+        }
+        */
+        return dealerCard ; // Index starts from 0 for card values 2-14
     }
 
     public void addToHand(Card card) {
