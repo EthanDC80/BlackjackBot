@@ -57,6 +57,13 @@ class Player {
         seenHands = new ArrayList<int[]>();
         seenHandsValues = new ArrayList<Double>();
     }
+    
+    public boolean chooseMove() {
+    	
+    	
+    	//hit
+    	return true;
+    }
 
     public void addToHand(Card card) {
         hand.add(card);

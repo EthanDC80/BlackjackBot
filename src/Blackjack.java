@@ -1,11 +1,11 @@
 public class Blackjack {
     public static void main(String[] args) {
-        int numSimulations = 10000;
+        int numSimulations = 100000;
         int playerWins = 0;
         int dealerWins = 0;
       //  int draws = 0;
 
-      /*  for (int i = 0; i < numSimulations; i++) {
+       for (int i = 0; i < numSimulations; i++) {
             boolean playerWin = simulateGame();
             if (playerWin) {
                 playerWins++;
@@ -13,7 +13,7 @@ public class Blackjack {
                 dealerWins++;
             }
         }
-	*/
+	
         
         
         
@@ -32,7 +32,7 @@ public class Blackjack {
         player.addToHand(deck.drawCard());
 
         // Player's turn
-        while (player.getHandValue() <17) {
+        while (player.getHandValue() <= 15) {
             player.addToHand(deck.drawCard());
         }
 
