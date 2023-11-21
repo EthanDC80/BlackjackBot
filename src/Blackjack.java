@@ -1,6 +1,6 @@
 public class Blackjack {
     public static void main(String[] args) {
-    	 int numSimulations = 10000;
+    	 int numSimulations = 1000000;
          int playerWins = 0;
          int dealerWins = 0;
 
