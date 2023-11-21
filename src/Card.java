@@ -33,6 +33,7 @@ class Deck {
         }
 
         int randomIndex = new Random().nextInt(cards.size());
+        System.out.println("CARD DRAWN: " + cards.get(randomIndex).value);
         return cards.remove(randomIndex);
     }
 

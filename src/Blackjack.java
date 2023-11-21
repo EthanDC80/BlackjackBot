@@ -1,6 +1,6 @@
 public class Blackjack {
     public static void main(String[] args) {
-    	 int numSimulations = 10000;
+    	 int numSimulations = 100;
          int playerWins = 0;
          int dealerWins = 0;
 
@@ -11,6 +11,7 @@ public class Blackjack {
              } else {
                  dealerWins++;
              }
+             System.out.println("END");
          }
 
          System.out.println("Player Wins: " + playerWins);
@@ -30,9 +31,16 @@ public class Blackjack {
         int hitCount = 0;
 
         // Player's turn
-        while (player.chooseMove() && hitCount < maxHits) {
+        while (player.chooseMove() && hitCount < maxHits && player.getHandValue() < 21) {
             player.addToHand(deck.drawCard());
             hitCount++;
+        }
+        if (player.getHandValue() > 21) {
+            // Dealer wins or player busts
+            System.out.println("Player busts");
+            Player.adjustPercentages(player, false);
+            System.out.println(Player.pctString(player));
+            return false;
         }
 
         // Dealer's turn
@@ -46,21 +54,27 @@ public class Blackjack {
         // Determine the winner
         int playerValue = player.getHandValue();
         int dealerValue = dealer.getHandValue();
+        
+        // for (Card c : player.getHand()) {
+        //     System.out.println(c.value);
+        // }
 
         // Adjust percentages based on the game outcome
         if (playerValue > 21 || (dealerValue <= 21 && dealerValue >= playerValue)) {
             // Dealer wins or player busts
             System.out.println("Player busts or dealer wins.");
-            player.adjustPercentages(dealer, false);
+            Player.adjustPercentages(player, false);
+            System.out.println(Player.pctString(player));
             return false;
         } else if (dealerValue > 21 || playerValue > dealerValue) {
             // Player wins
             System.out.println("Player wins.");
-            player.adjustPercentages(dealer, true);
+            Player.adjustPercentages(player, true);
+            System.out.println(Player.pctString(player));
             return true;
         } else {
             // Draw
-            System.out.println("Game is a draw.");
+            // System.out.println("Game is a draw.");
             return false;
         }
     }
