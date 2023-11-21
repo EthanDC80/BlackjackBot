@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ArrayList;
 class Player {
     private ArrayList<Card> hand;
     private ArrayList<int[]> indexHistory;
-    private double[][] pctChart = new double[36][20];
 /*
  *         A 2 3 4 5 6 7 8 9 10 | sA s2 s3 s4 s5 s6 s7 s8 s9 s10
  * 3     |                      |
@@ -46,14 +46,10 @@ class Player {
     private boolean hasAce;
     private ArrayList<int[]> seenHands;
     private ArrayList<Double> seenHandsValues;
+    public int dealerValue;
 
-    public Player() {
+    public Player(double[][] pctChart) {
         hand = new ArrayList<Card>();
-        for (int i = 0; i < pctChart.length; i++) {
-            for (int j = 0; j < pctChart[i].length; j++) {
-                pctChart[i][j] = 0.5;
-            }
-        }
         hasAce = false;
         indexHistory = new ArrayList<int[]>();
         seenHands = new ArrayList<int[]>();
@@ -63,24 +59,34 @@ class Player {
     public int[] getIndex() throws IndexOutOfBoundsException {
         int[] index = {-1, -1};
         int handValue = getHandValue();
-        int dealerCardIndex = dealerCardIndex();
-        if (handValue >= 3 && handValue <= 21 && dealerCardIndex >= 0 && dealerCardIndex <= 21) {
+        int dealerCardIndex = dealerValue;
+        if (handValue > 0 && handValue <= 21 && dealerCardIndex > 0 && dealerCardIndex <= 21) {
             // Check if the hand has doubles
-            if (hand.size() == 2 && hand.get(0).value == hand.get(1).value) {
-                index[0] = hand.get(0).value + 25;
-                index[1] = dealerCardIndex - 1;
-            } else {
+            // if (hand.size() == 2 && hand.get(0).value == hand.get(1).value) {
+            //     index[0] = hand.get(0).value + 25;
+            //     if (dealerCardIndex == 11){
+            //         index[1] = 0;
+            //     }
+            //     else{
+            //         index[1] = dealerCardIndex - 1;
+            //     }
+            // } else {
                 index[0] = handValue - 3;
-                index[1] = dealerCardIndex - 1;
-            }
+                if (dealerCardIndex == 11){
+                    index[1] = 0;
+                }
+                else{
+                    index[1] = dealerCardIndex - 1;
+                }
+            // }
         } else {
             
         }
-        // indexHistory.add(index);
+        indexHistory.add(index);
         return index;
     }
 
-    public boolean chooseMove() {
+    public boolean chooseMove(double[][] pctChart) {
         int handValue = getHandValue();
         int dealerCardIndex = dealerCardIndex();
         double hitPercentage = 0.5;
@@ -90,8 +96,8 @@ class Player {
             hitPercentage = pctChart[index[0]][index[1]];
 
             // Check if the random number is less than the hitPercentage
-            System.out.println("Hit Percentage: " + hitPercentage);
-            return Math.random() < hitPercentage;
+            // System.out.println("Hit Percentage: " + hitPercentage);
+            return 0.5 < hitPercentage;
 
         } else {
             // Handle out-of-bounds conditions (you may choose to always hit or always stand)
@@ -99,19 +105,19 @@ class Player {
         }
     }
     
-    static void adjustPercentages(Player player, boolean playerWins) {
-        double adjustment = 1000; // Fixed adjustment for demonstration purposes
-        System.out.println("SIZE !!!!!!!!!!!!!" + player.indexHistory.size());
+    static void adjustPercentages(Player player, boolean playerWins, double[][] pctChart) {
+        double adjustment = 0.05; // Fixed adjustment for demonstration purposes
+        // System.out.println("SIZE !!!!!!!!!!!!!" + player.indexHistory.size());
         for (int[] index : player.indexHistory){
             if (index[0] == -1){
                 continue;
             }
             if (playerWins) {
-                player.pctChart[index[0]][index[1]] += adjustment;
-                player.pctChart[index[0]][index[1]] = Math.min(1.0, player.pctChart[index[0]][index[1]]); // Ensure it doesn't exceed 1.0
+                pctChart[index[0]][index[1]] += adjustment;
+                pctChart[index[0]][index[1]] = Math.min(1.0, pctChart[index[0]][index[1]]); // Ensure it doesn't exceed 1.0
             } else {
-                player.pctChart[index[0]][index[1]] -= adjustment;
-                player.pctChart[index[0]][index[1]] = Math.max(0.0, player.pctChart[index[0]][index[1]]); // Ensure it doesn't go below 0.0
+                pctChart[index[0]][index[1]] -= adjustment;
+                pctChart[index[0]][index[1]] = Math.max(0.0, pctChart[index[0]][index[1]]); // Ensure it doesn't go below 0.0
             }
         }
     }
@@ -122,7 +128,7 @@ class Player {
             dealerCard = 14; // Convert Ace to 14
         }
         */
-        return dealerCard ; // Index starts from 0 for card values 2-14
+        return dealerCard; // Index starts from 0 for card values 2-14
     }
 
     public void addToHand(Card card) {
@@ -168,15 +174,25 @@ class Player {
         seenHandsValues.add(0.5);
         return true;
     }
-    public static String pctString(Player player) {
+    public static String pctString(double[][] pctChart) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < player.pctChart.length; i++) {
-            for (int j = 0; j < player.pctChart[i].length; j++) {
-                sb.append(String.format("%.2f ", player.pctChart[i][j]));
+        for (int i = 0; i < pctChart.length; i++) {
+            for (int j = 0; j < pctChart[i].length; j++) {
+                sb.append(String.format("%.2f ", pctChart[i][j]));
             }
             sb.append("\n");
         }
         return sb.toString();
     }
+
+    public void printHand() {
+        // System.out.print("The player's hand is: ");
+        for (Card card : hand) {
+            // System.out.print(card.value + " ");
+        }
+        // System.out.println();
+    }
+
+        // Existing code...
 }
 

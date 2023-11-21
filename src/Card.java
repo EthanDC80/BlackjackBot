@@ -18,10 +18,12 @@ class Deck {
                 if (i == 11 || i == 12 || i == 13) {
                     cards.add(new Card(10));
                 }
-                if (i == 14) {
+                else if (i == 14) {
                     cards.add(new Card(11));
                 }
-                cards.add(new Card(i));
+                else{
+                    cards.add(new Card(i));
+                }
             }
         }
     }
@@ -33,7 +35,8 @@ class Deck {
         }
 
         int randomIndex = new Random().nextInt(cards.size());
-        System.out.println("CARD DRAWN: " + cards.get(randomIndex).value);
+        // System.out.println("CARD DRAWN: " + cards.get(randomIndex).value);
+        // System.out.println("CARD DRAWN: " + cards.get(randomIndex).value);
         return cards.remove(randomIndex);
     }
 
@@ -44,11 +47,20 @@ class Deck {
                 if (i == 11 || i == 12 || i == 13) {
                     cards.add(new Card(10));
                 }
-                if (i == 14) {
+                else if (i == 14) {
                     cards.add(new Card(11));
                 }
-                cards.add(new Card(i));
+                else{
+                    cards.add(new Card(i));
+                }
             }
+        }
+    }
+
+    public void printCardValues(ArrayList<Card> cards) {
+        System.out.println("ASDF");
+        for (Card card : cards) {
+            System.out.println(card.value);
         }
     }
 
